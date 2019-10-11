@@ -18,7 +18,7 @@ class finalizeStep():
             self.moveManifest()
             self.moveSchema()
             self.moveMets()
-            self.saveLastRun()
+            # self.saveLastRun()
         self.notify()
 
     def success(self):
