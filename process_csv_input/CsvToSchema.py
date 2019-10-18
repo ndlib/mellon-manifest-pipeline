@@ -63,15 +63,16 @@ class CsvToSchema():
     def has_part_items(self):
         ret = []
         for index, item in enumerate(self.dict['items']):
-            id = self.base_url + "%2F" + item["Filenames"]
             file = Path(item["Filenames"]).stem
+            tif_file = file + ".tif"
+            id = self.base_url + "%2F" + tif_file
 
             schemaImage = {
                 "@id": id,
                 "@type": "ImageObject",
                 "name": item["Label"],
                 "caption": item["Description"],
-                "contentUrl": self.config['image-server-base-url'] + "/" + self.id + "%2F" + item["Filenames"],
+                "contentUrl": self.config['image-server-base-url'] + "/" + self.id + "%2F" + tif_file,
                 "position": str(index + 1),
                 "isPartOf": self.base_url,
                 "height": str(self.image_data[file]['height']),

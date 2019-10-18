@@ -22,10 +22,10 @@ def determine_source_type(event):
         id = o.get('Key').replace(prefix, "")
         keys.append(id)
 
-    if (event["main-csv"] in keys and event['items-csv'] in keys):
-        return "csv"
-    elif (event['descriptive-mets-file'] in keys and event['structural-mets-file'] in keys):
-        return 'mets'
+    if (event['descriptive-mets-file'] in keys and event['structural-mets-file'] in keys):
+        return "mets"
+    elif (event["main-csv"] in keys and event['items-csv'] in keys):
+        return 'csv'
 
     raise Exception('unable to determine metadata source type from {}'.format(keys))
 

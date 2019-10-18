@@ -69,7 +69,7 @@ class MetsToSchema():
             name = item.attrib['LABEL']
             file = Path(filename).stem
             schemaImage = {
-                "@id": self.base_url + "%2F" + filename,
+                "@id": self.config['image-server-base-url'] + "/" + self.id + "%2F" + filename,
                 "@type": "ImageObject",
                 "name": name,
                 "caption": "",
@@ -81,9 +81,6 @@ class MetsToSchema():
                 "identifier": self.id + "%2F" + filename,
             }
             ret.append(schemaImage)
-
-#        if (item['DefaultImage'] == 'yes'):
-#            self.default_image = id
 
         if (not self.default_image):
             self.default_image = ret[0]['@id']
