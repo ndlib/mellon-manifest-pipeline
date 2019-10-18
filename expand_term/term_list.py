@@ -1,9 +1,9 @@
-import urllib2
+import urllib
 import re
 
 
 def get_term_list(termuri):
-    response = urllib2.urlopen(termuri)
+    response = urllib.urlopen(termuri)
     lines = response.readlines()
     result = ""
     for line in lines:
