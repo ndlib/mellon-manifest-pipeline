@@ -60,10 +60,12 @@ class Test(unittest.TestCase):
         filename = os.path.join(local_folder, 'test/matching_s3_objects.json')
         with open(filename, 'r') as input_source:
             mock_get_matching_s3_objects.return_value = json.load(input_source)
+        actual_results = self.collections_api_class._get_collection_list('embark')
         filename = os.path.join(local_folder, 'test/embark_collections_list.json')
+        # with open(filename, 'w') as f:
+        #     json.dump(actual_results, f, indent=2)
         with open(filename, 'r') as input_source:
             expected_results = json.load(input_source)
-        actual_results = self.collections_api_class._get_collection_list('embark')
         self.assertEquals(actual_results, expected_results)
 
 

@@ -34,15 +34,13 @@ class CollectionsApi():
     def _get_collection_list(self, source: str = "") -> list:
         """ Get a listing of collections by source.  If no source is specified, return all."""
         collection_list = []
-        folder = self.config["process-bucket-data-basepath"]
         patterns = {
-            "aleph": "(^" + folder + r"/[0-9]{9}\.json$)",
-            "archivesspace": "(^" + folder + r"/[A-Z]*[0-9]*_EAD\.json$)",
-            "curate": "(^" + folder + r"/[a-z0-9]{11}\.json$)",
-            "embark": "(^" + folder + r"/[A-Z]*[0-9]{4}.[.0-9]*[.a-z]*\.json$)",
+            "aleph": r"(^[0-9]{9}/standard/index\.json$)",
+            "archivesspace": r"(^[A-Z]*[0-9]*_EAD/standard/index\.json$)",
+            "curate": r"(^[a-z0-9]{11}/standard/index\.json$)",
+            "embark": r"(^[A-Z]*[0-9]{4}.[.0-9]*[.a-z]*/standard/index\.json$)",
         }
-        # print("trying to read: ", self.config["process-bucket"], self.config["process-bucket-data-basepath"])
-        complete_list = self._call_get_matching_s3_objects(self.config["process-bucket"], self.config["process-bucket-data-basepath"])
+        complete_list = self._call_get_matching_s3_objects(self.config["manifest-server-bucket"], "", "/standard/index.json")
         if source:
             regex = patterns.get(source, "^source was specified but no pattern found so do not return results")
         else:
@@ -50,13 +48,13 @@ class CollectionsApi():
         for file_info in complete_list:
             key = file_info.get('Key', '')
             if re.search(regex, key):
-                collection_list.append(re.sub('^' + folder + '/', '', re.sub('.json$', '', key)))
+                collection_list.append(re.sub('^', '', re.sub('/standard/index.json$', '', key)))
         collection_list.sort()
         return collection_list
 
     def _call_get_matching_s3_objects(self, bucket: str, prefix: str = "", suffix: str = "") -> dict:
         """ This only exists so I can mock it """
-        matching_objects = get_matching_s3_objects(self.config["process-bucket"], self.config["process-bucket-data-basepath"])
+        matching_objects = get_matching_s3_objects(bucket, prefix, suffix)
         # I'll keep this here in case I need to re-save results of get_matching_s3_objects
         # filename = os.path.join(self.local_folder, 'test/matching_s3_objects.json')
         # local_complete_list = []

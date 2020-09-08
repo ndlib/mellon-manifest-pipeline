@@ -68,12 +68,12 @@
 				"note": "added 5/15/20 sm"
 			},
 			{ "label": "collections",
-				"fields": ["710"],
+				"fields": ["791"],
 				"selection": "range",
 				"subfields": ["a", "b", "c", "d", "e", "q"],
 				"specialSubfields": ["d"],
 				"format": "array",
-				"note": "added 7/20/20 sm"
+				"note": ["added 710 7/20/20 sm", "changed 710 to 791 8/26020 sm"]
 			},
 			{ "label": "createdDate",
 				"fields": ["264", "260"],
@@ -92,9 +92,11 @@
 				"selection": "range",
 				"skipFields": ["655", "690"],
 				"subfields": ["a", "b", "c", "d", "e", "f", "g", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+				"subfieldSeparator": " -- ",
 				"specialSubfields": ["0"],
 				"extraProcessing": "format_subjects",
-				"format": "array"
+				"format": "array",
+				"note": "these subfields are defined here: https://www.loc.gov/marc/bibliographic/bd650.html and https://www.loc.gov/marc/bibliographic/bd6xx.html"
 			},
 			{ "label": "copyrightStatus",
 				"fields": ["542"],

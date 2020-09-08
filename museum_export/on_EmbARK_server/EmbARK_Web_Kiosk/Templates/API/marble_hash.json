@@ -3,7 +3,9 @@
 	"changeLog": [
 		{"changeDate": "2020-06-17", "change": ["changed dateCreated to createdDate", "changed wording for access:", "added $firstDigitalAsset to fix comma problem"]},
 		{"changeDate": "2020-07-08", "change": ["changed children.sequence from string to integer"]},
-		{"changeDate": "2020-07-14", "change": ["added physicalAccess as duplicate of access (to prepare for removal of access node)"]}
+		{"changeDate": "2020-07-14", "change": ["added physicalAccess as duplicate of access (to prepare for removal of access node)"]},
+		{"changeDate": "2020-08-27", "change": ["changed where $childrenExist is set to ignore non-web-enabled children."]}
+
 	],
 	"objects": {
 	<!--#4DEVAL gsFunc_StoreSelectionForLoop (->[Objects_1]) -->
@@ -17,7 +19,7 @@
 		,
 		<!--#4DENDIF -->
 		<!--#4DIF [Objects_1]Disp_Access_No#""--><!--#4DEVAL my_Id := [Objects_1]Disp_Access_No--><!--4DELSE--><!--#4DEVAL my_Id := [Objects_1]Temp_ID--><!--4DENDIF-->
-
+		
 		  "<!--#4DEVAL my_Id-->":
 			{
 			"sourceSystem": "EmbARK",
@@ -101,10 +103,10 @@
 			 <!--#4Dendif-->
 			"children":[
 						  <!--#4Dif gsFunc_ObjectHasRelatedObjects ($currentObjectId; "Children")-->
-						  <!--#4DEVAL $childrenExist := 1 -->
 						  <!--#4DEVAL $childSequence := 0 -->
 							<!--#4DEVAL gsFunc_SortRecords(->[Objects_1]Disp_Access_No; ">")-->
 							  <!--#4DLOOP [Objects_1]-->
+								  <!--#4DEVAL $childrenExist := 1 -->
 								  <!--#4DEVAL $childSequence := $childSequence + 1 -->
 								  {"id": "<!--#4DIF [Objects_1]Disp_Access_No#""--><!--#4DEVAL [Objects_1]Disp_Access_No--><!--4DELSE--><!--#4DEVAL [Objects_1]Temp_ID--><!--4DENDIF-->",
 								  "sequence": <!--#4DEVAL $childSequence -->
@@ -158,7 +160,7 @@
 				"level": "manifest"
 			<!--#4DENDIF -->
 			}
-
+		
 		<!--#4Dif (Selected Record Number([Objects_1])< Records in Selection([Objects_1])) -->,<!--#4Dendif-->
 	<!--#4DENDLOOP-->
 	}

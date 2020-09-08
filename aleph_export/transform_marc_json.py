@@ -64,6 +64,7 @@ class TransformMarcJson():
         """ More detailed logic to extract value from json representation of marc record,
             as defined by marc_to_json_translation_control_file.json """
         subfields_needed = json_field_definition.get("subfields", "")
+        subfield_separator = json_field_definition.get("subfieldSeparator", " ")
         positions = json_field_definition.get("positions", "")
         format = json_field_definition.get("format", "")
         extra_processing = json_field_definition.get("extraProcessing", "")
@@ -73,7 +74,7 @@ class TransformMarcJson():
             for key, value in field.items():
                 if self._process_this_field(json_field_definition, key, value):
                     if 'subfields' in value:
-                        value_found = self._get_required_subfields(value, subfields_needed, special_subfields)
+                        value_found = self._get_required_subfields(value, subfields_needed, special_subfields, subfield_separator)
                     elif positions != "":
                         value_found = self._get_required_positions(value, positions)
                     else:
@@ -141,7 +142,7 @@ class TransformMarcJson():
                 results += value[position]
         return results
 
-    def _get_required_subfields(self, subfields: dict, subfields_needed: list, special_subfields: list) -> dict:
+    def _get_required_subfields(self, subfields: dict, subfields_needed: list, special_subfields: list, subfield_separator: str) -> dict:
         """ Append values from subfields we're interested in """
         results = ""
         for subfield in subfields['subfields']:
@@ -150,9 +151,9 @@ class TransformMarcJson():
                     if results == "":
                         results = value
                     else:
-                        results += " " + value
+                        results += subfield_separator + value
         if special_subfields:  # separate special subfields, at the end of the string
-            subfield_results = self._get_required_subfields(subfields, special_subfields, [])
+            subfield_results = self._get_required_subfields(subfields, special_subfields, [], subfield_separator)
             if subfield_results:
                 results += "^^^" + subfield_results
         return results

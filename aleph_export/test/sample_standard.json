@@ -1,6 +1,6 @@
 {
   "apiVersion": 1,
-  "fileCreatedDate": "2020-07-23",
+  "fileCreatedDate": "2020-08-26",
   "sourceSystem": "Aleph",
   "repository": "RARE",
   "sequence": 1,
@@ -46,24 +46,22 @@
       "display": "O'Neill, Francis, 1848-1936 donor."
     }
   ],
-  "collections": [
-    "Capt. Francis O'Neill Collection of Irish Studies (University of Notre Dame. Library)"
-  ],
+  "collections": [],
   "createdDate": "[1796?]",
   "workType": "Notated music",
   "subjects": [
     {
-      "term": "Folk songs Ireland Instrumental settings."
+      "term": "Folk songs -- Ireland -- Instrumental settings."
     },
     {
-      "term": "Songs, Irish Ireland Instrumental settings."
+      "term": "Songs, Irish -- Ireland -- Instrumental settings."
     },
     {
       "term": "Piano music, Arranged.",
       "uri": "http://id.loc.gov/authorities/subjects/sh85101791"
     },
     {
-      "term": "Folk music Ireland.",
+      "term": "Folk music -- Ireland.",
       "uri": "http://id.loc.gov/authorities/subjects/sh98002834"
     }
   ],
@@ -90,7 +88,7 @@
       "sourceSystem": "Aleph",
       "repository": "RARE",
       "apiVersion": 1,
-      "fileCreatedDate": "2020-07-23",
+      "fileCreatedDate": "2020-08-26",
       "level": "file",
       "sequence": 1,
       "thumbnail": true,

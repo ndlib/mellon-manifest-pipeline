@@ -21,26 +21,30 @@ def run(event, context):
     finalize_quittime = datetime.utcnow() + timedelta(seconds=config['seconds-to-allow-for-processing'])
 
     setup_config_for_restarting_step(config)
-
-    for id in config.get("ids"):
-        if id not in config['finalize_completed_ids']:
-            step = FinalizeStep(id, config)
-            # step.error = config.get("unexpected", "")
-            # if not step.error:
-            #    step.manifest_metadata = json.loads(mu.s3_read_file_content(s3_bucket, s3_schema_path))
-            step.run()
-            config['finalize_completed_ids'].append(id)
-
-        if break_to_restart_step(finalize_quittime):
-            break
-
-    # have we processed all the fields.
-    event['finalize_complete'] = finalize_is_complete(config)
-
-    if "unexpected" in event:
+    finalize_run_limit = 10
+    if config['finalize_run_number'] > finalize_run_limit:
         event['error_found'] = True
+        event['finalize_error'] = str(config['finalize_run_number']) + ' finalize runs exceeded limit of ' + str(finalize_run_limit)
     else:
-        event['error_found'] = False
+        for id in config.get("ids"):
+            if id not in config['finalize_completed_ids']:
+                step = FinalizeStep(id, config)
+                # step.error = config.get("unexpected", "")
+                # if not step.error:
+                #    step.manifest_metadata = json.loads(mu.s3_read_file_content(s3_bucket, s3_schema_path))
+                step.run()
+                config['finalize_completed_ids'].append(id)
+
+            if break_to_restart_step(finalize_quittime):
+                break
+
+        # have we processed all the fields.
+        event['finalize_complete'] = finalize_is_complete(config)
+
+        if "unexpected" in event:
+            event['error_found'] = True
+        else:
+            event['error_found'] = False
 
     cache_pipeline_config(config, event)
 
@@ -63,9 +67,6 @@ def setup_config_for_restarting_step(config):
         config['finalize_run_number'] = 0
 
     config['finalize_run_number'] = config['finalize_run_number'] + 1
-
-    if config['finalize_run_number'] > 5:
-        raise Exception("Too many executions")
 
 
 # python -c 'from handler import *; test()'

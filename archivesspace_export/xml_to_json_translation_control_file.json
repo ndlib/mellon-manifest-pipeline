@@ -277,6 +277,18 @@
 				"seedNodes": [{"collectionId": "collectionId"}, {"passedParentId": "passedParentId"}, {"sourceSystem": "sourceSystem"}, {"repository": "repository"},
 					{"apiVersion": "apiVersion"}, {"fileCreatedDate": "fileCreatedDate"}, {"passedParentId": "id"}],
 				"checkForInconsistencies": ["fileId"]
+			},
+			{
+				"label": "items",
+				"otherNodes": "dao",
+				"xpath": "./dao",
+				"optional": true,
+				"collapseTree": false,
+				"seedNodes": [{"collectionId": "collectionId"}, {"passedParentId": "passedParentId"}, {"sourceSystem": "sourceSystem"}, {"repository": "repository"},
+					{"apiVersion": "apiVersion"},	{"fileCreatedDate": "fileCreatedDate"},	{"passedParentId": "id"}],
+				"checkForInconsistencies": [
+					"fileId"
+				]
 			}
 		]
 	},
@@ -317,6 +329,58 @@
 				"label": "id",
 				"externalProcess": "file_name_from_filePath",
 				"passLabels": [{"filename": "filePath"}]
+			}
+		]
+	},
+	"dao": {
+		"FieldsToExtract": [
+			{
+				"label": "level",
+				"constant": "file",
+				"format": "text"
+			},
+			{
+				"label": "thumbnail",
+				"constant": true,
+				"format": "text"
+			},
+			{
+				"label": "description",
+				"xpath": "./daodesc/p",
+				"optional": true,
+				"format": "text"
+			},
+			{
+				"label": "filePath",
+				"xpath": ".",
+				"optional": true,
+				"returnAttributeName": "href",
+				"removeDuplicates": true,
+				"excludePattern": [
+					".shtml"
+				],
+				"format": "text"
+			},
+			{
+				"label": "parentId",
+				"fromLabels": [
+					"passedParentId"
+				],
+				"format": "text"
+			},
+			{
+				"removeNodes": [
+					"passedParentId"
+				]
+			},
+			{
+				"label": "id",
+				"externalProcess": "file_name_from_filePath",
+				"passLabels": [
+					{
+						"filename": "filePath"
+					}
+				]
 			}
 		]
 	},

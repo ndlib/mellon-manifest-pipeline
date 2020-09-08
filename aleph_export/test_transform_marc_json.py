@@ -36,11 +36,11 @@ class Test(unittest.TestCase):
         }
         subfields_needed_list = ["a", "b", "c", "e", "q"]
         sepcial_subfields_list = []
-        actual_results = self.transform_marc_json_class._get_required_subfields(subfields_dict, subfields_needed_list, sepcial_subfields_list)
+        actual_results = self.transform_marc_json_class._get_required_subfields(subfields_dict, subfields_needed_list, sepcial_subfields_list, " ")
         expected_results = "Crocker, Richard L., author, performer."
         self.assertTrue(actual_results == expected_results)
         sepcial_subfields_list = ["d"]
-        actual_results = self.transform_marc_json_class._get_required_subfields(subfields_dict, subfields_needed_list, sepcial_subfields_list)
+        actual_results = self.transform_marc_json_class._get_required_subfields(subfields_dict, subfields_needed_list, sepcial_subfields_list, " ")
         expected_results = "Crocker, Richard L., author, performer.^^^1910-1963,"
         self.assertTrue(actual_results == expected_results)
 
